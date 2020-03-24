@@ -41,6 +41,7 @@ def ABX2(A, B, X, X_ratio, A_dictionary, B_dictionary, X_dictionary):
         plt.show()
 
         df = pd.DataFrame(np.round(ratio, 2), columns=['%s Ratio' % X[0]])
+        df['%s Ratio' % X[1]] = np.round(1-ratio, 2)
         df['Tolerance Factor'] = t_effective
         return df
 
@@ -90,7 +91,7 @@ def ABX3(A, B, X, X_ratio, A_dictionary, B_dictionary, X_dictionary):
         t_effective = (A_radii + r_effective) / (math.sqrt(2) * (B_radii + r_effective))
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        img = ax.scatter(x_ratio, y_ratio, z_ratio, c=t_effective, cmap=plt.hot())
+        img = ax.scatter(x_ratio, y_ratio, z_ratio, c=t_effective, cmap=plt.jet())
         fig.colorbar(img)
         ax.set_xlabel("%s Molar Ratio" % X[0])
         ax.set_ylabel("%s Molar Ratio" % X[1])
@@ -148,6 +149,7 @@ def AB2X(A, B, X, B_ratio, A_dictionary, B_dictionary, X_dictionary):
         plt.show()
 
         df = pd.DataFrame(np.round(ratio, 2), columns=['%s Ratio' % B[0]])
+        df['%s Ratio' % B[1]] = np.round(1-ratio, 2)
         df['Tolerance Factor'] = t_effective
         return df
     else:
@@ -193,11 +195,12 @@ def A2BX(A, B, X, A_ratio, A_dictionary, B_dictionary, X_dictionary):
         plt.show()
 
         df = pd.DataFrame(np.round(ratio, 2), columns=['%s Ratio' % A[0]])
+        df['%s Ratio' % A[1]] = np.round(1-ratio, 2)
         df['Tolerance Factor'] = t_effective
         return df
 
     else:
-        if sum(A_ratio == 1):
+        if sum(A_ratio) == 1:
             A_radii = []
             for ions in A:
                 A_radii.append(A_dictionary.get(ions))
@@ -242,7 +245,7 @@ def A3BX(A, B, X, A_ratio, A_dictionary, B_dictionary, X_dictionary):
         t_effective = (r_effective + X_radii) / (math.sqrt(2) * (B_radii + X_radii))
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        img = ax.scatter(x_ratio, y_ratio, z_ratio, c=t_effective, cmap=plt.hot())
+        img = ax.scatter(x_ratio, y_ratio, z_ratio, c=t_effective, cmap=plt.jet())
         fig.colorbar(img)
         ax.set_xlabel("%s Molar Ratio" % A[0])
         ax.set_ylabel("%s Molar Ratio" % A[1])
@@ -258,7 +261,7 @@ def A3BX(A, B, X, A_ratio, A_dictionary, B_dictionary, X_dictionary):
         return df
 
     else:
-        if (sum(A_ratio) == 1):
+        if sum(A_ratio) == 1:
             A_radii = []
             for ions in A:
                 A_radii.append(A_dictionary.get(ions))
